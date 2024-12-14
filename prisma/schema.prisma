@@ -16,7 +16,7 @@ datasource db {
 model Tutor {
   id       String @id @default(uuid())
   name     String
-  email    String
+  email    String @unique
   password String
 
   pets Pets[]
@@ -28,11 +28,11 @@ model Tutor {
 }
 
 model Pets {
-  id        String   @id @default(uuid())
-  name      String
-  specie    String
-  breed     String
-  birthDate DateTime
+  id     String @id @default(uuid())
+  name   String
+  specie String
+  breed  String
+  age    String
 
   Tutor   Tutor?  @relation(fields: [tutorId], references: [id])
   tutorId String?
