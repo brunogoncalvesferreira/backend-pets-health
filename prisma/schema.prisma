@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Tutor {
+  id       String @id @default(uuid())
+  name     String
+  email    String
+  password String
+
+  pets Pets[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("tutor")
+}
+
+model Pets {
+  id        String   @id @default(uuid())
+  name      String
+  specie    String
+  breed     String
+  birthDate DateTime
+
+  Tutor   Tutor?  @relation(fields: [tutorId], references: [id])
+  tutorId String?
+
+  appointments       Appointments[]
+  vaccine            Vaccine[]
+  disease            Disease[]
+  prescriptionsExams PrescriptionsExams[]
+
+  createdAt  DateTime @default(now())
+  updatedAte DateTime @default(now())
+
+  @@map("pets")
+}
+
+model Appointments {
+  id      String   @id @default(uuid())
+  date    DateTime
+  reason  String
+  nameVet String
+
+  Pets   Pets?   @relation(fields: [petsId], references: [id])
+  petsId String?
+
+  createdAt DateTime @default(now())
+
+  @@map("apponitments")
+}
+
+model Vaccine {
+  id              String   @id @default(uuid())
+  name            String
+  lot             String
+  applicationDate DateTime
+  expirationDate  DateTime
+
+  Pets   Pets?   @relation(fields: [petsId], references: [id])
+  petsId String?
+
+  createdAt DateTime @default(now())
+
+  @@map("vaccine")
+}
+
+model Disease {
+  id             String   @id @default(uuid())
+  name           String
+  description    String
+  diagnosticDate DateTime
+
+  Pets   Pets?   @relation(fields: [petsId], references: [id])
+  petsId String?
+
+  createdAt DateTime @default(now())
+
+  @@map("disease")
+}
+
+model PrescriptionsExams {
+  id                      String   @id @default(uuid())
+  descriptionPrescriptons String
+  descriptionExams        String
+  date                    DateTime @default(now())
+
+  Pets   Pets?   @relation(fields: [petsId], references: [id])
+  petsId String?
+
+  createdAt DateTime @default(now())
+
+  @@map("prescriptionsExams")
+}
