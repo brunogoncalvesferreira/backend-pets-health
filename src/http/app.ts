@@ -10,6 +10,8 @@ import { env } from '../env'
 import { createTutor } from './routes/create-tutor'
 import { createAppointments } from './routes/create-appointments'
 import { getAppointments } from './routes/get-appointments'
+import { createVaccine } from './routes/create-vaccine'
+import { getVaccines } from './routes/get-vaccines'
 
 export const app = fastify()
 
@@ -28,3 +30,5 @@ app.register(cookie, {
 app.register(createTutor)
 app.register(createAppointments)
 app.register(getAppointments)
+app.register(createVaccine)
+app.register(getVaccines)

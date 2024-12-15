@@ -6,12 +6,12 @@ const SchemaRequestParams = z.object({
 	petsId: z.string().uuid(),
 })
 
-export async function getAppointments(app: FastifyInstance) {
-	app.get('/appointments/:petsId', async (request, reply) => {
+export async function getVaccines(app: FastifyInstance) {
+	app.get('/vaccines/:petsId', async (request, reply) => {
 		try {
 			const { petsId } = SchemaRequestParams.parse(request.params)
 
-			const appointments = await prisma.appointments.findMany({
+			const vaccines = await prisma.vaccine.findMany({
 				where: {
 					petsId,
 				},
@@ -27,7 +27,7 @@ export async function getAppointments(app: FastifyInstance) {
 				},
 			})
 
-			return appointments
+			return vaccines
 		} catch (error) {
 			console.log(error as Error)
 		}
