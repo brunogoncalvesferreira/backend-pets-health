@@ -49,10 +49,11 @@ model Pets {
 }
 
 model Appointments {
-  id      String   @id @default(uuid())
-  date    DateTime
-  reason  String
-  nameVet String
+  id         String   @id @default(uuid())
+  date       DateTime
+  reason     String
+  nameVet    String
+  contactVet String
 
   Pets   Pets?   @relation(fields: [petsId], references: [id])
   petsId String?

@@ -3,6 +3,7 @@ import type { FastifyInstance } from 'fastify'
 import { prisma } from '../../lib/prisma'
 
 import z from 'zod'
+
 import { hash } from 'bcryptjs'
 
 const SchemaRequestBody = z.object({
@@ -16,7 +17,7 @@ const SchemaRequestBody = z.object({
 	age: z.string(),
 })
 
-export async function createTutorRouter(app: FastifyInstance) {
+export async function createTutor(app: FastifyInstance) {
 	app.post('/tutors', async (request, reply) => {
 		try {
 			const { name, email, password, petName, specie, breed, age } =

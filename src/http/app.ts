@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 import fastify from 'fastify'
 
 import cors from '@fastify/cors'
@@ -5,7 +7,9 @@ import cors from '@fastify/cors'
 import cookie from '@fastify/cookie'
 import type { FastifyCookieOptions } from '@fastify/cookie'
 import { env } from '../env'
-import { createTutorRouter } from './routes/create-tutor-router'
+import { createTutor } from './routes/create-tutor'
+import { createAppointments } from './routes/create-appointments'
+import { getAppointments } from './routes/get-appointments'
 
 export const app = fastify()
 
@@ -21,4 +25,6 @@ app.register(cookie, {
 	},
 } as FastifyCookieOptions)
 
-app.register(createTutorRouter)
+app.register(createTutor)
+app.register(createAppointments)
+app.register(getAppointments)
