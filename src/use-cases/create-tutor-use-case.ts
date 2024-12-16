@@ -13,7 +13,7 @@ interface CreateTutorUseCaseResponse {
 	tutor: Tutor
 }
 
-export class CreateTutorAndPetsUseCase {
+export class CreateTutorUseCase {
 	constructor(private tutorRepository: TutorRepository) {}
 
 	async execute({
