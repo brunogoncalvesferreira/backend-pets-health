@@ -1,10 +1,10 @@
 import type { FastifyInstance } from 'fastify'
 
-import { prisma } from '../../lib/prisma'
-
 import z from 'zod'
 
 import { hash } from 'bcryptjs'
+import { makeCreateTutor } from '../../use-cases/factories/make-create-tutor'
+import { makeCreatePets } from '../../use-cases/factories/make-create-pets'
 
 const SchemaRequestBody = z.object({
 	name: z.string(),
@@ -23,30 +23,21 @@ export async function createTutor(app: FastifyInstance) {
 			const { name, email, password, petName, specie, breed, age } =
 				SchemaRequestBody.parse(request.body)
 
-			const tutorWithSameEmail = await prisma.tutor.findUnique({
-				where: {
-					email,
-				},
+			const createTutor = makeCreateTutor()
+			const createPet = makeCreatePets()
+
+			const tutor = await createTutor.execute({
+				name,
+				email,
+				password,
 			})
 
-			if (tutorWithSameEmail) {
-				throw new Error('E-mail já cadastradoa. Tente novamente.')
-			}
-
-			const passwordHash = await hash(password, 6)
-
-			const tutors = await prisma.tutor.create({
-				data: { name, email, password: passwordHash },
-			})
-
-			await prisma.pets.create({
-				data: {
-					name: petName,
-					specie,
-					breed,
-					age,
-					tutorId: tutors.id,
-				},
+			await createPet.execute({
+				petName,
+				specie,
+				breed,
+				age,
+				tutorId: tutor.tutor.id,
 			})
 
 			return reply.status(201).send()
