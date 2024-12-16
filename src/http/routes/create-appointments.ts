@@ -20,9 +20,7 @@ export function createAppointments(app: FastifyInstance) {
 				data: { date, reason, nameVet, contactVet, petsId },
 			})
 
-			return reply
-				.status(201)
-				.send({ message: 'Consulta agendada com sucesso!' })
+			return reply.status(201).send()
 		} catch (error) {
 			console.log(error)
 		}

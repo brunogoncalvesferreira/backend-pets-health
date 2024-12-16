@@ -49,7 +49,7 @@ export async function createTutor(app: FastifyInstance) {
 				},
 			})
 
-			return reply.status(201).send({ massage: 'Pet criado com sucesso!' })
+			return reply.status(201).send()
 		} catch (error) {
 			console.log(error)
 		}

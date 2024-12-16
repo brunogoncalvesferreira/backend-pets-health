@@ -12,6 +12,10 @@ import { createAppointments } from './routes/create-appointments'
 import { getAppointments } from './routes/get-appointments'
 import { createVaccine } from './routes/create-vaccine'
 import { getVaccines } from './routes/get-vaccines'
+import { createMedicalHistory } from './routes/create-medical-history'
+import { getMedicalHistory } from './routes/get-medical-history'
+import { createPrescriptionsAndExams } from './routes/create-prescriptions-and-exams'
+import { getPrescriptoinsAndExams } from './routes/get-prescriptoins-and-exams'
 
 export const app = fastify()
 
@@ -32,3 +36,7 @@ app.register(createAppointments)
 app.register(getAppointments)
 app.register(createVaccine)
 app.register(getVaccines)
+app.register(createMedicalHistory)
+app.register(getMedicalHistory)
+app.register(createPrescriptionsAndExams)
+app.register(getPrescriptoinsAndExams)
