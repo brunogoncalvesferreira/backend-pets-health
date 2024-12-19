@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify'
-import { prisma } from '../../lib/prisma'
 
 import z from 'zod'
+import { makeCreateMedicalHistory } from '../../use-cases/factories/make-create-medical-history'
 
 const SchemarequestBody = z.object({
 	name: z.string(),
@@ -16,8 +16,13 @@ export async function createMedicalHistory(app: FastifyInstance) {
 			const { name, description, diagnosticDate, petsId } =
 				SchemarequestBody.parse(request.body)
 
-			await prisma.medicalHistory.create({
-				data: { name, description, diagnosticDate, petsId },
+			const createMedicalHistory =  makeCreateMedicalHistory()
+
+			await createMedicalHistory.execute({
+				name,
+				description,
+				diagnosticDate,
+				petsId
 			})
 
 			return reply.status(201).send()
