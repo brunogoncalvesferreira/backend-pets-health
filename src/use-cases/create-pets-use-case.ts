@@ -1,6 +1,5 @@
-import type { TutorRepository } from '../repositories/tutor-repository'
 import type { PetsRepository } from '../repositories/pets-repository'
-import type { Tutor, Pets } from '@prisma/client'
+import type { Pets } from '@prisma/client'
 
 interface CreatePetUseCaseRequest {
 	petName: string
