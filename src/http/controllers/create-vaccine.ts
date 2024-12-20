@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify'
-import { prisma } from '../../lib/prisma'
 
 import z from 'zod'
+import { makeCreateVaccine } from '../../use-cases/factories/make-create-vaccine'
 
 const SchemaRequestBody = z.object({
 	name: z.string(),
@@ -17,11 +17,17 @@ export async function createVaccine(app: FastifyInstance) {
 			const { name, lot, applicationDate, expirationDate, petsId } =
 				SchemaRequestBody.parse(request.body)
 
-			await prisma.vaccine.create({
-				data: { name, lot, applicationDate, expirationDate, petsId },
+			const createVaccine = makeCreateVaccine()
+
+			await createVaccine.execute({
+				name,
+				lot,
+				applicationDate,
+				expirationDate,
+				petsId,
 			})
 
-			return reply.status(201).send({ message: 'Vacina cadastrada!' })
+			return reply.status(201).send()
 		} catch (error) {
 			console.log(error)
 		}

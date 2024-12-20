@@ -4,7 +4,7 @@ import type { Appointments } from '@prisma/client'
 import type { GetAppointmentsRepository } from '../appointments-repository'
 
 export class PrismaAppointmentsRepository implements GetAppointmentsRepository {
-	async listById(petsId: string): Promise<Appointments | null> {
+	async listById(petsId: string): Promise<Appointments[] | null> {
 		const appointments = await prisma.appointments.findMany({
 			where: {
 				petsId,
@@ -21,6 +21,6 @@ export class PrismaAppointmentsRepository implements GetAppointmentsRepository {
 			},
 		})
 
-		return appointments ? appointments[0] : null
+		return appointments
 	}
 }
