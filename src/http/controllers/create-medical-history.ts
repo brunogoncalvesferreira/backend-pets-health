@@ -16,13 +16,13 @@ export async function createMedicalHistory(app: FastifyInstance) {
 			const { name, description, diagnosticDate, petsId } =
 				SchemarequestBody.parse(request.body)
 
-			const createMedicalHistory =  makeCreateMedicalHistory()
+			const createMedicalHistory = makeCreateMedicalHistory()
 
 			await createMedicalHistory.execute({
 				name,
 				description,
 				diagnosticDate,
-				petsId
+				petsId,
 			})
 
 			return reply.status(201).send()

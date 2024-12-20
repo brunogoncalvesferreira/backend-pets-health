@@ -16,7 +16,6 @@ export async function getAppointments(app: FastifyInstance) {
 			const appointments = await getAppointments.execute(petsId)
 
 			return appointments
-
 		} catch (error) {
 			console.log(error as Error)
 		}

@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify'
 import { prisma } from '../../lib/prisma'
 import z from 'zod'
+import { makeGetMedicalHistory } from '../../use-cases/factories/make-get-medical-history'
 
 const SchemaRequestParams = z.object({
 	petsId: z.string().uuid(),
@@ -11,21 +12,9 @@ export async function getMedicalHistory(app: FastifyInstance) {
 		try {
 			const { petsId } = SchemaRequestParams.parse(request.params)
 
-			const medicalHistory = await prisma.medicalHistory.findMany({
-				where: {
-					petsId,
-				},
-				include: {
-					Pets: {
-						include: {
-							Tutor: true,
-						},
-					},
-				},
-				orderBy: {
-					createdAt: 'desc',
-				},
-			})
+			const getMedicalHistory = makeGetMedicalHistory()
+
+			const medicalHistory = getMedicalHistory.execute(petsId)
 
 			return medicalHistory
 		} catch (error) {
