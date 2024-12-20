@@ -8,7 +8,7 @@ const SchemaRequestParams = z.object({
 })
 
 export async function getMedicalHistory(app: FastifyInstance) {
-	app.get('/medical-history/:petsId', async (request, reply) => {
+	app.get('/medical-history/:petsId', async (request, _) => {
 		try {
 			const { petsId } = SchemaRequestParams.parse(request.params)
 

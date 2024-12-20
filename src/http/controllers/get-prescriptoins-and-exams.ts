@@ -7,7 +7,7 @@ const SchemaRequestParams = z.object({
 })
 
 export async function getPrescriptoinsAndExams(app: FastifyInstance) {
-	app.get('/prescriptions-and-exams/:petsId', async (request, reply) => {
+	app.get('/prescriptions-and-exams/:petsId', async (request, _) => {
 		try {
 			const { petsId } = SchemaRequestParams.parse(request.params)
 
