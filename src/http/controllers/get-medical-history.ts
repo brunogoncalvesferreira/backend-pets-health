@@ -1,5 +1,4 @@
 import type { FastifyInstance } from 'fastify'
-import { prisma } from '../../lib/prisma'
 import z from 'zod'
 import { makeGetMedicalHistory } from '../../use-cases/factories/make-get-medical-history'
 

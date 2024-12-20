@@ -1,6 +1,7 @@
 import type { FastifyInstance } from 'fastify'
 import z from 'zod'
-import { prisma } from '../../lib/prisma'
+
+import { makeCreateAppointments } from '../../use-cases/factories/make-create-appointments'
 
 const SchemaRequestBody = z.object({
 	date: z.coerce.date(),
@@ -16,8 +17,14 @@ export function createAppointments(app: FastifyInstance) {
 			const { date, reason, nameVet, contactVet, petsId } =
 				SchemaRequestBody.parse(request.body)
 
-			await prisma.appointments.create({
-				data: { date, reason, nameVet, contactVet, petsId },
+			const createAppointments = makeCreateAppointments()
+
+			await createAppointments.execute({
+				date,
+				reason,
+				nameVet,
+				contactVet,
+				petsId,
 			})
 
 			return reply.status(201).send()

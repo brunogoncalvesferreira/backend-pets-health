@@ -2,7 +2,6 @@ import type { FastifyInstance } from 'fastify'
 
 import z from 'zod'
 
-import { hash } from 'bcryptjs'
 import { makeCreateTutor } from '../../use-cases/factories/make-create-tutor'
 import { makeCreatePets } from '../../use-cases/factories/make-create-pets'
 

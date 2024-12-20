@@ -1,5 +1,9 @@
-import type { Appointments } from '@prisma/client'
+import type { Appointments, Prisma } from '@prisma/client'
 
-export interface GetAppointmentsRepository {
+export interface AppointmentsRepository {
+	createAppointments(
+		data: Prisma.AppointmentsCreateInput,
+	): Promise<Appointments>
+
 	listById: (petsId: string) => Promise<Appointments[] | null>
 }
