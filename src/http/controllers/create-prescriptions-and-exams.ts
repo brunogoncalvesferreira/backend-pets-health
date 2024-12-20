@@ -2,6 +2,7 @@ import type { FastifyInstance } from 'fastify'
 import { prisma } from '../../lib/prisma'
 
 import z from 'zod'
+import { makeCreatePrescriptionsAndExams } from '../../use-cases/factories/make-prescriptions-and-exams'
 
 const SchemarequestBody = z.object({
 	descriptionPrescriptons: z.string(),
@@ -16,8 +17,13 @@ export async function createPrescriptionsAndExams(app: FastifyInstance) {
 			const { descriptionPrescriptons, descriptionExams, date, petsId } =
 				SchemarequestBody.parse(request.body)
 
-			await prisma.prescriptionsExams.create({
-				data: { descriptionPrescriptons, descriptionExams, date, petsId },
+			const createPrescriptionsAndExams = makeCreatePrescriptionsAndExams()
+
+			await createPrescriptionsAndExams.execute({
+				descriptionPrescriptons,
+				descriptionExams,
+				date,
+				petsId,
 			})
 
 			return reply.status(201).send()
